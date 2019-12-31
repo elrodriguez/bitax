@@ -1,0 +1,47 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <form [formGroup]="validations_form"  (ngSubmit)="onSubmit(validations_form.value)">
+    <ion-list lines="full" class="ion-no-margin ion-no-padding">
+      <ion-item>
+        <ion-label position="stacked">Código<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="text" formControlName="code" ></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.code">
+          <div class="error-message" *ngIf="validations_form.get('code').hasError(validation.type) && (validations_form.get('code').dirty || validations_form.get('code').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+      <ion-item>
+        <ion-label position="stacked">Nombre<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="text" formControlName="name"></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.name">
+          <div class="error-message" *ngIf="validations_form.get('name').hasError(validation.type) && (validations_form.get('name').dirty || validations_form.get('name').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+      <ion-item>
+        <ion-checkbox slot="start" formControlName="state"></ion-checkbox>
+        <ion-label>Estado</ion-label>
+      </ion-item>
+
+    </ion-list>
+    <ion-toolbar class="ion-padding">
+      <ion-button color="primary"  size="default" expand="block" type="submit">
+        <ion-icon slot="start" name="checkmark"></ion-icon>
+        {{ btnText }}
+      </ion-button>
+    </ion-toolbar>
+  </form>
+</ion-content>

@@ -19,7 +19,6 @@ export class DashboardPage implements OnInit {
     private menuCtrl: MenuController,
     private loadingService: LoadingService
   ) {
-    this.loadingService.showLoading('Espere');
     this.getUserSession()
   }
 
@@ -42,7 +41,6 @@ export class DashboardPage implements OnInit {
 
   getUserSession(){
     this.dataUser = JSON.parse(localStorage.getItem('user'));
-    this.loadingService.hideLoading()
   }
 
 }

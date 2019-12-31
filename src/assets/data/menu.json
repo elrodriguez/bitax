@@ -10,6 +10,11 @@
         "redirectTo":"/personal-information"
     },
     {
+        "icon":"briefcase",
+        "name":"Roles",
+        "redirectTo":"/role"
+    },
+    {
         "icon":"settings",
         "name":"Configuracion",
         "redirectTo":"/configurations"

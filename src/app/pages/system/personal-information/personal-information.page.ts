@@ -40,17 +40,7 @@ export class PersonalInformationPage implements OnInit {
     private userService: UserService,
     private loadingService: LoadingService,
     private alertService: AlertService
-  ) { 
-    this.loadingService.showLoading('Espere');
-    this.sessionUser = JSON.parse(localStorage.getItem('user'));
-    this.userService.getUserById(this.sessionUser.uid).valueChanges().subscribe((data: User) => {
-      this.dataUser = data
-      this.loadingService.hideLoading()
-    },(error2) => {
-      console.log(error2);
-    });
-    
-  }
+  ) { }
 
   ngOnInit() {
     this.validations_form = new FormGroup({
@@ -67,8 +57,9 @@ export class PersonalInformationPage implements OnInit {
       dateNac: new FormControl('', Validators.required),
       sexo: new FormControl('')
     });
+    this.getUser();
   }
-  saveChanges(value){
+  async saveChanges(value){
     this.loadingService.showLoading('Espere');
     this.dataUser.dateNac = value.dateNac;
     this.userService.updateUser(this.dataUser).then((res) => {
@@ -80,5 +71,14 @@ export class PersonalInformationPage implements OnInit {
       this.successMessage = "";
     });
   }
- 
+  async getUser(){
+    this.loadingService.showLoading('Espere');
+    this.sessionUser = JSON.parse(localStorage.getItem('user'));
+    this.userService.getUserById(this.sessionUser.uid).valueChanges().subscribe((data: User) => {
+      this.dataUser = data
+      this.loadingService.hideLoading()
+    },(error2) => {
+      console.log(error2);
+    });
+  }
 }

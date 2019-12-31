@@ -21,12 +21,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { RoleFormComponent } from './components/system/role-form/role-form.component';
 
 firebase.initializeApp(environment.firebase);
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
+  entryComponents: [
+    RoleFormComponent
+  ],
   imports: [
     BrowserModule, IonicModule.forRoot(), 
     AppRoutingModule,

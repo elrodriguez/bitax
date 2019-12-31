@@ -25,6 +25,6 @@ export class UserService {
   }
 
   deleteUser(uid) {
-    this.angularFireDatabase.object('/users/' + uid);
+    this.angularFireDatabase.object('/users/' + uid).remove();
   }
 }

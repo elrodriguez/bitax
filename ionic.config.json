@@ -1,5 +1,7 @@
 {
   "name": "bitax",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
