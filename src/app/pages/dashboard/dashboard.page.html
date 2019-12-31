@@ -1,0 +1,24 @@
+
+<app-header title="Principal" backIcon="false"></app-header>
+<ion-content>
+ 
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-center">
+        ¡Bienvenido!
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-text-center">
+         {{ dataUser.email }}
+      </ion-col>
+    </ion-row>
+  </ion-grid>  
+  
+  
+</ion-content>
+<ion-footer (click)="logout()">
+  <ion-toolbar color="secondary">
+    <ion-title>Log out</ion-title>
+  </ion-toolbar>
+</ion-footer>

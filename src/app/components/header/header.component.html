@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!--ion-button (click) = "toggleMenu()">
+          <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button-->
+      <ion-menu-button color="primary" menu="first"></ion-menu-button>
+    </ion-buttons>
+   
+    <ion-title color="primary">{{ title }}</ion-title>
+    <ion-buttons slot="primary" *ngIf="backIcon=='yes'">
+      <ion-button color="secondary" routerLink="/dashboard">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
