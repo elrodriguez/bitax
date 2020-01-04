@@ -1,0 +1,22 @@
+[
+    {
+        "icon":"person",
+        "name":"Mi perfil",
+        "redirectTo":"/profile"
+    },
+    {
+        "icon":"finger-print",
+        "name":"Información Personal",
+        "redirectTo":"/personal-information"
+    },
+    {
+        "icon":"briefcase",
+        "name":"Roles",
+        "redirectTo":"/role"
+    },
+    {
+        "icon":"settings",
+        "name":"Configuracion",
+        "redirectTo":"/configurations"
+    }
+]

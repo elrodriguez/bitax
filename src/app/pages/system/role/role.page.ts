@@ -49,4 +49,49 @@ export class RolePage implements OnInit {
     return await modal.present();
   }
 
+  async presentAlertConfirm( item ) {
+    const alert = await this.alertCtrl.create({
+      header: 'Confirmar!',
+      message: 'Seguro que desea eliminar: '+ item.name,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Continuar',
+          handler: () => {
+            this.destroyRole(item.key);
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async destroyRole(key){
+    this.loading = await this.loadingCtrl.create({
+      message: 'Espere'
+    });
+    await this.loading.present();
+
+    this.roleService.deleteRole(key).then( () => {
+      this.alertCtrl.create({
+        header: 'Enhorabuena',
+        message: 'Se Elimino correctamente.',
+        buttons: ['OK']
+      }).then(alert => {
+        alert.present();
+      });
+
+      this.loading.dismiss();
+    }).catch( (error) => {
+      console.log(error)
+    })
+  }
 }

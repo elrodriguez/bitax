@@ -23,6 +23,8 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { RoleFormComponent } from './components/system/role-form/role-form.component';
 
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+
 firebase.initializeApp(environment.firebase);
 
 @NgModule({
@@ -45,6 +47,7 @@ firebase.initializeApp(environment.firebase);
     StatusBar,
     SplashScreen,
     AuthenticationService,
+    Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

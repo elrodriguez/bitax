@@ -25,7 +25,7 @@ export class RoleService {
   }
 
   deleteRole(key) {
-    this.angularFireDatabase.object('/roles/' + key).remove();
+    return this.angularFireDatabase.object('/roles/' + key).remove();
   }
   
 }

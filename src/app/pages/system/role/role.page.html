@@ -7,7 +7,7 @@
   <ion-list>
     <ion-item-sliding *ngFor="let item of roles">
       <ion-item-options side="start">
-        <ion-item-option color="danger">
+        <ion-item-option color="danger" (click)="presentAlertConfirm(item)">
           <ion-icon slot="icon-only" name="trash"></ion-icon>
         </ion-item-option>
         <ion-item-option color="secondary" (click)="modalRole(item.key)">

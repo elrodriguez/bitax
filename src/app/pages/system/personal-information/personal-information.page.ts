@@ -12,8 +12,8 @@ import { AlertService } from 'src/app/services/components/alert.service';
 })
 export class PersonalInformationPage implements OnInit {
   
-  private dataUser: User = {};
-  private sessionUser: User = {};
+  private dataUser: User;
+  private sessionUser: User;
   public sexo: String = '1';
 
   validations_form: FormGroup;
@@ -55,15 +55,20 @@ export class PersonalInformationPage implements OnInit {
         Validators.required
       ])),
       dateNac: new FormControl('', Validators.required),
-      sexo: new FormControl('')
+      sex: new FormControl('')
     });
     this.getUser();
   }
-  async saveChanges(value){
-    this.loadingService.showLoading('Espere');
-    this.dataUser.dateNac = value.dateNac;
-    this.userService.updateUser(this.dataUser).then((res) => {
-      this.loadingService.hideLoading();
+  async saveChanges(values){
+    this.dataUser = {
+      uid: this.sessionUser.uid,
+      email: values.email,
+      name: values.name,
+      last_name: values.last_name,
+      dateNac: values.dateNac,
+      sex: values.sex
+    };
+    this.userService.updateUser(this.dataUser).then( () => {
       this.alertService.presentAlert('Enhorabuena','Mensaje de confirmación','Los datos se actualizaron correctamente.')
       this.errorMessage = "";
     }).catch((error) => {
@@ -72,11 +77,15 @@ export class PersonalInformationPage implements OnInit {
     });
   }
   async getUser(){
-    this.loadingService.showLoading('Espere');
     this.sessionUser = JSON.parse(localStorage.getItem('user'));
     this.userService.getUserById(this.sessionUser.uid).valueChanges().subscribe((data: User) => {
-      this.dataUser = data
-      this.loadingService.hideLoading()
+      this.validations_form.setValue({
+        email: data.email,
+        name: data.name,
+        last_name: data.last_name,
+        dateNac: data.dateNac,
+        sex: data.sex
+      });
     },(error2) => {
       console.log(error2);
     });

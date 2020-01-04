@@ -8,7 +8,7 @@
           <ion-list>
             <ion-item>
               <ion-label position="stacked">Nombres</ion-label>
-              <ion-input type="text" formControlName="name" [(ngModel)]="dataUser.name"></ion-input>
+              <ion-input type="text" formControlName="name"></ion-input>
             </ion-item>
             <div class="validation-errors">
               <ng-container *ngFor="let validation of validation_messages.name">
@@ -19,7 +19,7 @@
             </div >
             <ion-item>
               <ion-label position="stacked">Apellidos</ion-label>
-              <ion-input type="text" formControlName="last_name" [(ngModel)]="dataUser.last_name"></ion-input>
+              <ion-input type="text" formControlName="last_name"></ion-input>
             </ion-item>
             <div class="validation-errors">
               <ng-container *ngFor="let validation of validation_messages.last_name">
@@ -30,7 +30,7 @@
             </div>
             <ion-item>
               <ion-label position="stacked">Email</ion-label>
-              <ion-input type="email" formControlName="email" [(ngModel)]="dataUser.email"></ion-input>
+              <ion-input type="email" formControlName="email"></ion-input>
             </ion-item>
             <div class="validation-errors">
               <ng-container *ngFor="let validation of validation_messages.email">
@@ -45,10 +45,9 @@
                 cancelText="Cancelar"
                 doneText="Seleccionar"
                 formControlName="dateNac"
-                [(ngModel)]="dataUser.dateNac"
               ></ion-datetime>
             </ion-item>
-            <ion-radio-group [(ngModel)]="dataUser.sex" formControlName="sexo">
+            <ion-radio-group formControlName="sex">
               <ion-list-header>
                 <ion-label>Sexo</ion-label>
               </ion-list-header>

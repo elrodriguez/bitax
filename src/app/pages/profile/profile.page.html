@@ -1,8 +1,18 @@
 
 <app-header title="Mi Perfil" backIcon="yes"></app-header>
 <ion-content class="ion-no-padding">
+  <ion-segment>
+    <ion-segment-button (click)="takePhoto()">
+      <ion-icon name="camera"></ion-icon>
+      <ion-label>Camara</ion-label>
+    </ion-segment-button>
+    <ion-segment-button (click)="searchInGallery()">
+      <ion-icon name="images"></ion-icon>
+      <ion-label>Galeria</ion-label>
+    </ion-segment-button>
+  </ion-segment>
   <ion-card class="ion-no-margin">
-      <img src="{{ userAvatar }}" style="width: 100%;" />
+      <img src="{{ userAvatar }}" *ngIf="userAvatar" style="width: 100%;" />
       <ion-card-header>
         <ion-card-subtitle>{{ dataUser.email }}</ion-card-subtitle>
         <ion-card-title>{{ dataUser.last_name }} {{ dataUser.name }}</ion-card-title>

@@ -45,7 +45,7 @@ export class RoleFormComponent implements OnInit {
     this.validations_form = this.formBuilder.group({
       name: new FormControl('', Validators.required),
       code: new FormControl('', Validators.required),
-      state: new FormControl(''),
+      state: new FormControl(true),
     });
   }
 
