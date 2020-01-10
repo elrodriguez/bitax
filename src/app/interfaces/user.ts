@@ -4,5 +4,6 @@ export interface User {
     name?:string,
     last_name?:string,
     dateNac?: string,
-    sex?:string
+    sex?:string,
+    avatar?:string
 }

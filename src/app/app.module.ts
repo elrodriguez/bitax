@@ -22,6 +22,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { RoleFormComponent } from './components/system/role-form/role-form.component';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
@@ -41,7 +42,8 @@ firebase.initializeApp(environment.firebase);
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    AngularFireStorageModule
   ],
   providers: [
     StatusBar,

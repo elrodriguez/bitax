@@ -125,22 +125,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_services_api_system_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/api/system/user.service */ "./src/app/services/api/system/user.service.ts");
 /* harmony import */ var src_app_services_components_loading_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/components/loading.service */ "./src/app/services/components/loading.service.ts");
 /* harmony import */ var _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic-native/camera/ngx */ "./node_modules/@ionic-native/camera/ngx/index.js");
+/* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/fire/storage */ "./node_modules/@angular/fire/storage/index.js");
+
 
 
 
 
 
 var ProfilePage = /** @class */ (function () {
-    function ProfilePage(userService, loadingService, camera) {
+    function ProfilePage(userService, loadingService, camera, angularFireStorage) {
         this.userService = userService;
         this.loadingService = loadingService;
         this.camera = camera;
+        this.angularFireStorage = angularFireStorage;
         this.dataUser = {};
-        this.sessionUser = {};
+        this.getData();
     }
     ProfilePage.prototype.ngOnInit = function () {
-        this.getData();
         this.userAvatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgTDL4Cw8qGMQhaV7DSI6lBXergjv2nhPFEf5Q-r-g0K25Kn9G7Q&s";
+        var id = Math.random().toString(36).substring(2);
+        var filePath = 'upload/users/' + this.sessionUser.uid + '/' + id + '.jpeg';
+        var pictures = this.angularFireStorage.ref(filePath);
+        var tack = this.angularFireStorage.upload(filePath, this.userAvatar);
+    };
+    ProfilePage.prototype.onUploadAvatar = function (file) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var id, filePath, pictures, tack;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                id = Math.random().toString(36).substring(2);
+                filePath = 'upload/users/' + this.sessionUser.uid + '/' + id + '.jpeg';
+                pictures = this.angularFireStorage.ref(filePath);
+                tack = this.angularFireStorage.upload(filePath, file);
+                return [2 /*return*/];
+            });
+        });
     };
     ProfilePage.prototype.getData = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -148,7 +166,14 @@ var ProfilePage = /** @class */ (function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 this.sessionUser = JSON.parse(localStorage.getItem('user'));
                 this.userService.getUserById(this.sessionUser.uid).valueChanges().subscribe(function (data) {
-                    _this.dataUser = data;
+                    _this.dataUser = {
+                        email: data.email,
+                        uid: data.uid,
+                        name: data.name,
+                        last_name: data.last_name,
+                        dateNac: data.dateNac,
+                        sex: data.sex
+                    };
                 }, function (error2) {
                     console.log(error2);
                 });
@@ -157,6 +182,7 @@ var ProfilePage = /** @class */ (function () {
         });
     };
     ProfilePage.prototype.takePhoto = function () {
+        var _this = this;
         var options = {
             quality: 100,
             destinationType: this.camera.DestinationType.DATA_URL,
@@ -170,12 +196,14 @@ var ProfilePage = /** @class */ (function () {
             saveToPhotoAlbum: true
         };
         this.camera.getPicture(options).then(function (imageData) {
-            var userAvatar = 'data:image/jpeg;base64,' + imageData;
+            _this.userAvatar = 'data:image/jpeg;base64,' + imageData;
+            _this.onUploadAvatar(_this.userAvatar);
         }, function (err) {
             console.log(err);
         });
     };
     ProfilePage.prototype.searchInGallery = function () {
+        var _this = this;
         var options = {
             quality: 100,
             destinationType: this.camera.DestinationType.DATA_URL,
@@ -189,7 +217,8 @@ var ProfilePage = /** @class */ (function () {
             saveToPhotoAlbum: true
         };
         this.camera.getPicture(options).then(function (imageData) {
-            var userAvatar = 'data:image/jpeg;base64,' + imageData;
+            _this.userAvatar = 'data:image/jpeg;base64,' + imageData;
+            _this.onUploadAvatar(_this.userAvatar);
         }, function (err) {
             console.log(err);
         });
@@ -197,7 +226,8 @@ var ProfilePage = /** @class */ (function () {
     ProfilePage.ctorParameters = function () { return [
         { type: src_app_services_api_system_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"] },
         { type: src_app_services_components_loading_service__WEBPACK_IMPORTED_MODULE_3__["LoadingService"] },
-        { type: _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_4__["Camera"] }
+        { type: _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_4__["Camera"] },
+        { type: _angular_fire_storage__WEBPACK_IMPORTED_MODULE_5__["AngularFireStorage"] }
     ]; };
     ProfilePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -207,7 +237,8 @@ var ProfilePage = /** @class */ (function () {
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_services_api_system_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"],
             src_app_services_components_loading_service__WEBPACK_IMPORTED_MODULE_3__["LoadingService"],
-            _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_4__["Camera"]])
+            _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_4__["Camera"],
+            _angular_fire_storage__WEBPACK_IMPORTED_MODULE_5__["AngularFireStorage"]])
     ], ProfilePage);
     return ProfilePage;
 }());

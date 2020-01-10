@@ -119,28 +119,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_services_api_system_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/api/system/user.service */ "./src/app/services/api/system/user.service.ts");
 /* harmony import */ var src_app_services_components_loading_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/components/loading.service */ "./src/app/services/components/loading.service.ts");
 /* harmony import */ var _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic-native/camera/ngx */ "./node_modules/@ionic-native/camera/ngx/index.js");
+/* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/fire/storage */ "./node_modules/@angular/fire/storage/es2015/index.js");
+
 
 
 
 
 
 let ProfilePage = class ProfilePage {
-    constructor(userService, loadingService, camera) {
+    constructor(userService, loadingService, camera, angularFireStorage) {
         this.userService = userService;
         this.loadingService = loadingService;
         this.camera = camera;
+        this.angularFireStorage = angularFireStorage;
         this.dataUser = {};
-        this.sessionUser = {};
+        this.getData();
     }
     ngOnInit() {
-        this.getData();
         this.userAvatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgTDL4Cw8qGMQhaV7DSI6lBXergjv2nhPFEf5Q-r-g0K25Kn9G7Q&s";
+        let id = Math.random().toString(36).substring(2);
+        let filePath = 'upload/users/' + this.sessionUser.uid + '/' + id + '.jpeg';
+        const pictures = this.angularFireStorage.ref(filePath);
+        const tack = this.angularFireStorage.upload(filePath, this.userAvatar);
+    }
+    onUploadAvatar(file) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            let id = Math.random().toString(36).substring(2);
+            let filePath = 'upload/users/' + this.sessionUser.uid + '/' + id + '.jpeg';
+            const pictures = this.angularFireStorage.ref(filePath);
+            const tack = this.angularFireStorage.upload(filePath, file);
+        });
     }
     getData() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             this.sessionUser = JSON.parse(localStorage.getItem('user'));
             this.userService.getUserById(this.sessionUser.uid).valueChanges().subscribe((data) => {
-                this.dataUser = data;
+                this.dataUser = {
+                    email: data.email,
+                    uid: data.uid,
+                    name: data.name,
+                    last_name: data.last_name,
+                    dateNac: data.dateNac,
+                    sex: data.sex
+                };
             }, (error2) => {
                 console.log(error2);
             });
@@ -160,7 +181,8 @@ let ProfilePage = class ProfilePage {
             saveToPhotoAlbum: true
         };
         this.camera.getPicture(options).then((imageData) => {
-            let userAvatar = 'data:image/jpeg;base64,' + imageData;
+            this.userAvatar = 'data:image/jpeg;base64,' + imageData;
+            this.onUploadAvatar(this.userAvatar);
         }, (err) => {
             console.log(err);
         });
@@ -179,7 +201,8 @@ let ProfilePage = class ProfilePage {
             saveToPhotoAlbum: true
         };
         this.camera.getPicture(options).then((imageData) => {
-            let userAvatar = 'data:image/jpeg;base64,' + imageData;
+            this.userAvatar = 'data:image/jpeg;base64,' + imageData;
+            this.onUploadAvatar(this.userAvatar);
         }, (err) => {
             console.log(err);
         });
@@ -188,7 +211,8 @@ let ProfilePage = class ProfilePage {
 ProfilePage.ctorParameters = () => [
     { type: src_app_services_api_system_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"] },
     { type: src_app_services_components_loading_service__WEBPACK_IMPORTED_MODULE_3__["LoadingService"] },
-    { type: _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_4__["Camera"] }
+    { type: _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_4__["Camera"] },
+    { type: _angular_fire_storage__WEBPACK_IMPORTED_MODULE_5__["AngularFireStorage"] }
 ];
 ProfilePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -198,7 +222,8 @@ ProfilePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     }),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_services_api_system_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"],
         src_app_services_components_loading_service__WEBPACK_IMPORTED_MODULE_3__["LoadingService"],
-        _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_4__["Camera"]])
+        _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_4__["Camera"],
+        _angular_fire_storage__WEBPACK_IMPORTED_MODULE_5__["AngularFireStorage"]])
 ], ProfilePage);
 
 
